@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #06d6a0;
+            --primary-light: #7af8d8;
+            --primary-dark: #04a37c;
+            --text: #2b2d42;
+            --text-light: #8d99ae;
+            --bg: #ffffff;
+            --card-bg: #f8f9fa;
+            --border: #e9ecef;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --neon-glow: 0 0 10px rgba(6, 214, 160, 0.5);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text);
+            background-color: var(--bg);
+            line-height: 1.6;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: var(--bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            box-shadow: var(--neon-glow);
+        }
+               #designerList {
+                padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .designer-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 280px;
+    flex-shrink: 0;
+  }
+
+  .designer-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .designer-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .designer-info {
+    padding: 1.5rem;
+  }
+
+  .designer-name {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .designer-specialty {
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .designer-company {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .stars {
+    color: #ffc107;
+    margin-right: 0.5rem;
+  }
+
+  .rating-value {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    font-size: 0.9rem;
+  }
+
+  .btn-primary {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--primary-dark);
+    box-shadow: var(--neon-glow);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+  }
+
+  .btn-outline:hover {
+    background-color: var(--primary);
+    color: white;
+    box-shadow: var(--neon-glow);
+  }
+
+  @media screen and (max-width: 600px) {
+    .designer-card {
+      width: 100%;
+    }
+  }
+  footer {
+            background-color: var(--text);
+            color: white;
+            padding: 5rem 5% 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            color: var(--primary);
+        }
+
+        .footer-about {
+            margin-bottom: 1.5rem;
+            color: #adb5bd;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-contact {
+            list-style: none;
+            color: #adb5bd;
+        }
+
+        .footer-contact li {
+            margin-bottom: 1rem;
+        }
+
+        .contact-icon {
+            margin-right: 1rem;
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        nav ul li a.active {
+    color: var(--primary);
+}
+
+nav ul li a.active::after {
+    width: 100%;
+}
+
+/* Alternative approach - if you want to use the .line class for active state */
+nav ul li a.line.active {
+    color: var(--primary);
+}
+
+nav ul li a.line.active::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--primary);
+}
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+        }
+
+        .search-container {
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            padding: 0.5rem;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-select {
+            padding: 1rem;
+            border: none;
+            border-left: 1px solid var(--border);
+            font-size: 1rem;
+            color: var(--text-light);
+            outline: none;
+        }
+
+        .search-btn {
+            padding: 1rem 2rem;
+            border-radius: 0 50px 50px 0;
+            border: none;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            background-color: var(--primary-dark);
+            box-shadow: var(--neon-glow);
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 5rem 0 2rem;
+            font-size: 2.5rem;
+            color: var(--text);
+        }
+
+        .section-title span {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+  <header>
+    <a href="#" class="logo">Design<span>Connect</span></a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a class="line active" href="#">Designers</a></li>
+        <li><a href="aboutpage.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="login.html" class="btn btn-primary" id="loginLink">Login</a>
+  </header>
+
+  <section class="hero">
+    <h1>Find & Book Top Designers</h1>
+    <p>Connect with the best creative professionals...</p>
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Enter your city...">
+      <select class="search-select">
+        <option>Select Category</option>
+        <option>Interior Design</option>
+        <option>Fashion Design</option>
+        <option>Graphic Design</option>
+        <option>Web Design</option>
+        <option>Product Design</option>
+      </select>
+      <button class="search-btn">Search</button>
+    </div>
+  </section>
+
+  <main>
+    <div id="designerList"></div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <div class="footer-logo">Design<span>Connect</span></div>
+        <p class="footer-about">Connecting clients with the best design talent worldwide. Simple, clean UI with responsive cards and intuitive booking system.</p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-heading">Services</h3>
+        <ul class="footer-links">
+          <li><a href="#">Interior Design</a></li>
+          <li><a href="#">Fashion Design</a></li>
+          <li><a href="#">Graphic Design</a></li>
+          <li><a href="#">Web Design</a></li>
+          <li><a href="#">Product Design</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-heading">Company</h3>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Team</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Testimonials</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-heading">Contact</h3>
+        <ul class="footer-contact">
+          <li><i class="fas fa-phone-alt contact-icon"></i> +91 9876543210</li>
+          <li><i class="fas fa-envelope contact-icon"></i> hello@designconnect.com</li>
+          <li><i class="fas fa-map-marker-alt contact-icon"></i> 123 Design Street, Visakhapatnam</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 DesignConnect. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript Section -->
+  <script>
+    async function loadDesigners() {
+      const res = await fetch('http://localhost:6969/api/designers');
+      const designers = await res.json();
+      const list = document.getElementById('designerList');
+      list.innerHTML = "";
+
+      designers.forEach(d => {
+        const div = document.createElement('div');
+        div.className = "designer-card";
+        div.innerHTML = `
+          <img src="${d.photo}" class="designer-img" alt="${d.name}" />
+          <div class="designer-info">
+            <h3 class="designer-name">${d.name}</h3>
+            <span class="designer-specialty">${d.specialty}</span>
+            <span class="designer-location">${d.location}</span>
+            <div class="btn-container">
+              <a href="${d.portfolio}" class="btn btn-outline" target="_blank">View Portfolio</a>
+              <button class="btn btn-primary book-btn" data-id="${d._id}" data-name="${d.name}">Book Now</button>
+            </div>
+          </div>`;
+        list.appendChild(div);
+      });
+
+      // Attach event to book buttons
+      document.querySelectorAll('.book-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-id');
+          const name = btn.getAttribute('data-name');
+          localStorage.setItem("bookedDesignerId", id);
+          localStorage.setItem("bookedDesignerName", name);
+          window.location.href = "message.html";
+        });
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", loadDesigners);
+
+    // Login state switch to Dashboard
+    window.addEventListener("DOMContentLoaded", () => {
+      const loginLink = document.getElementById("loginLink");
+      const designerId = localStorage.getItem("designerId");
+      if (designerId) {
+        loginLink.textContent = "Dashboard";
+        loginLink.href = "ddashboard.html";
+      }
+    });
+
+    // Search functionality
+    document.querySelector(".search-btn").addEventListener("click", async () => {
+      const city = document.querySelector(".search-input").value.trim().toLowerCase();
+      const category = document.querySelector(".search-select").value.trim().toLowerCase();
+      const res = await fetch("http://localhost:6969/api/designers");
+      const designers = await res.json();
+
+      const filtered = designers.filter(d => {
+        const matchCity = city === "" || (d.location && d.location.toLowerCase().includes(city));
+        const matchCategory = category === "select category" || (d.specialty && d.specialty.toLowerCase() === category);
+        return matchCity && matchCategory;
+      });
+
+      const list = document.getElementById("designerList");
+      list.innerHTML = filtered.length === 0 
+        ? "<p>No designers found for your criteria.</p>"
+        : "";
+
+      filtered.forEach(d => {
+        const div = document.createElement("div");
+        div.className = "designer-card";
+        div.innerHTML = `
+          <img src="${d.photo}" class="designer-img" alt="${d.name}" />
+          <div class="designer-info">
+            <h3 class="designer-name">${d.name}</h3>
+            <span class="designer-specialty">${d.specialty}</span>
+            <span class="designer-location">${d.location}</span>
+            <div class="btn-container">
+              <a href="${d.portfolio}" class="btn btn-outline" target="_blank">View Portfolio</a>
+              <button class="btn btn-primary book-btn" data-id="${d._id}" data-name="${d.name}">Book Now</button>
+            </div>
+          </div>`;
+        list.appendChild(div);
+      });
+
+      // Rebind event listeners for filtered results
+      document.querySelectorAll('.book-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-id');
+          const name = btn.getAttribute('data-name');
+          localStorage.setItem("bookedDesignerId", id);
+          localStorage.setItem("bookedDesignerName", name);
+          window.location.href = "message.html";
+        });
+      });
+    });
+  </script>
+</body>
+</html>

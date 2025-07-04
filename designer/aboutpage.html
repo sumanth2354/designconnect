@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>About Us - DesignConnect</title>
+  <script>
+  // This will run on every page load
+  window.addEventListener('DOMContentLoaded', () => {
+    const loginLink = document.getElementById("loginLink");
+    const designerId = localStorage.getItem("designerId");
+
+    if (designerId && loginLink) {
+      loginLink.textContent = "Dashboard";
+      loginLink.href = "ddashboard.html";
+    }
+  });
+</script>
+
+  <style>
+    :root {
+      --primary: #06d6a0;
+      --primary-light: #7af8d8;
+      --primary-dark: #04a37c;
+      --text: #2b2d42;
+      --text-light: #8d99ae;
+      --bg: #ffffff;
+      --glass: rgba(255, 255, 255, 0.1);
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text);
+            background-color: var(--bg);
+            line-height: 1.6;
+        }
+
+    /* Floating background elements */
+    .bg-decoration {
+      position: fixed;
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(45deg, var(--primary-light), var(--primary));
+      border-radius: 50%;
+      opacity: 0.1;
+      z-index: -1;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .bg-decoration:nth-child(1) {
+      top: 10%;
+      left: -100px;
+      animation-delay: 0s;
+    }
+
+    .bg-decoration:nth-child(2) {
+      top: 60%;
+      right: -100px;
+      animation-delay: -10s;
+    }
+
+    .bg-decoration:nth-child(3) {
+      bottom: 20%;
+      left: 20%;
+      animation-delay: -5s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+     header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2%;
+            background-color: var(--bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            box-shadow: var(--neon-glow);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: var(--neon-glow);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background-color: #d8005e;
+            box-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
+        }
+
+
+    /* Hero Section */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 2rem;
+    }
+
+    #hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, var(--text), var(--primary-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: slideInUp 1s ease-out;
+    }
+
+    #hero p {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      margin-bottom: 2rem;
+      color: var(--text);
+      opacity: 0.9;
+      animation: slideInUp 1s ease-out 0.2s both;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 1rem;
+      animation: slideInUp 1s ease-out 0.4s both;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Sections */
+    section {
+      padding: 6rem 0;
+      position: relative;
+    }
+
+    section:nth-child(even) {
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    }
+
+    h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--text-light);
+      margin-bottom: 3rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Glass Cards */
+    .glass-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    }
+
+    .glass-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(6, 214, 160, 0.2);
+    }
+
+    .glass-card h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .glass-card p {
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* Service Icons */
+    .service-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, var(--primary), var(--primary-light));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    /* Feature List */
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-item:hover {
+      transform: translateX(10px);
+    }
+
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(45deg, var(--primary), var(--primary-light));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* Testimonials */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .testimonial {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .testimonial:hover {
+      transform: translateY(-5px);
+    }
+
+    .testimonial::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      font-size: 4rem;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-section h2 {
+      color: rgb(47, 45, 45);
+      -webkit-text-fill-color: rgb(81, 78, 78);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, var(--primary), var(--primary-light));
+      color: white;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--primary-dark);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(6, 214, 160, 0.3);
+    }
+    
+        footer {
+            background-color: var(--text);
+            color: white;
+            padding: 5rem 5% 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            color: var(--primary);
+        }
+
+        .footer-about {
+            margin-bottom: 1.5rem;
+            color: #adb5bd;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            color: #adb5bd;
+        }
+
+        .contact-icon {
+            margin-right: 1rem;
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-cta {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .glass-grid,
+      .feature-list,
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+
+     
+    }
+    nav ul li a.active {
+    color: var(--primary);
+}
+
+nav ul li a.active::after {
+    width: 100%;
+}
+
+/* Alternative approach - if you want to use the .line class for active state */
+nav ul li a.line.active {
+    color: var(--primary);
+}
+
+nav ul li a.line.active::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--primary);
+}
+  </style>
+</head>
+<body>
+   <header>
+    <a href="#" class="logo">Design<span>Connect</span></a>
+    <nav>
+       <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="alldesginers.html">Designers</a></li>
+            <li><a class="line active" href="#">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <a href="login.html" class="btn btn-primary" id="loginLink">Login</a>
+</header>
+  <!-- Background decorations -->
+  <div class="bg-decoration"></div>
+  <div class="bg-decoration"></div>
+  <div class="bg-decoration"></div>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-content">
+      <h1>DesignConnect</h1>
+      <p>Bridging Creative Talent with Real-World Needs</p>
+      <div class="hero-cta">
+        <a href="#services" class="btn btn-primary">Explore Services</a>
+        <a href="#team" class="btn btn-secondary">Meet Our Team</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Do -->
+  <section id="services">
+    <div class="container">
+      <h2>What We Do</h2>
+      <p class="section-subtitle">
+        DesignConnect is a platform that connects people with talented designers across multiple disciplines. Whether you're launching a startup, renovating your home, or refreshing your brand, we help you find the right creative partner.
+      </p>
+      <div class="glass-grid">
+        <div class="glass-card">
+          <div class="service-icon">🎨</div>
+          <h3>Graphic Design</h3>
+          <p>Brand identity, logos, and visual communications that make your business stand out</p>
+        </div>
+        <div class="glass-card">
+          <div class="service-icon">🏠</div>
+          <h3>Interior Design</h3>
+          <p>Transform your space with professional interior design services and consultations</p>
+        </div>
+        <div class="glass-card">
+          <div class="service-icon">👗</div>
+          <h3>Fashion Design</h3>
+          <p>Custom clothing design, styling, and fashion consultation for individuals and brands</p>
+        </div>
+        <div class="glass-card">
+          <div class="service-icon">💻</div>
+          <h3>UI/UX Design</h3>
+          <p>User-centered digital experiences that engage and convert your target audience</p>
+        </div>
+        <div class="glass-card">
+          <div class="service-icon">📦</div>
+          <h3>Product Design</h3>
+          <p>Innovative product design from concept to market-ready solutions</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who We Help -->
+  <section id="industries">
+    <div class="container">
+      <h2>Who We Help</h2>
+      <p class="section-subtitle">
+        Our platform serves diverse clients across industries, connecting them with the perfect design talent for their unique needs.
+      </p>
+      <div class="glass-grid">
+        <div class="glass-card">
+          <div class="service-icon">🚀</div>
+          <h3>Startups & Entrepreneurs</h3>
+          <p>Launch your vision with professional design that captures your brand essence</p>
+        </div>
+        <div class="glass-card">
+          <div class="service-icon">🏡</div>
+          <h3>Homeowners & Interior Clients</h3>
+          <p>Create beautiful, functional spaces that reflect your personal style</p>
+        </div>
+        <div class="glass-card">
+          <div class="service-icon">✨</div>
+          <h3>Fashion Brands & Stylists</h3>
+          <p>Develop unique fashion concepts and styling solutions for your brand</p>
+        </div>
+        <div class="glass-card">
+          <div class="service-icon">📈</div>
+          <h3>Agencies & Marketing Teams</h3>
+          <p>Scale your creative capabilities with our network of expert designers</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section id="why">
+    <div class="container">
+      <h2>Why Choose Us</h2>
+      <p class="section-subtitle">
+        We've built the most comprehensive platform for connecting clients with top-tier design talent.
+      </p>
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-icon">✅</div>
+          <div>
+            <h3>Curated Network</h3>
+            <p>A carefully vetted network of verified designers with proven track records</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔍</div>
+          <div>
+            <h3>Smart Search</h3>
+            <p>Find designers by location, style, specialty, or budget with our advanced filters</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <div>
+            <h3>Fast Booking</h3>
+            <p>Streamlined booking process that gets your project started in minutes</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">💫</div>
+          <div>
+            <h3>Clean Interface</h3>
+            <p>Intuitive, user-friendly platform designed for seamless collaboration</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🎯</div>
+          <div>
+            <h3>Real Portfolios</h3>
+            <p>Detailed profiles with authentic portfolios and client reviews</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section id="team">
+    <div class="container">
+      <h2>Meet the Maker</h2>
+      <p class="section-subtitle">
+        DesignConnect was built by a passionate developer and creative thinker, aiming to give independent designers a platform to be seen, hired, and celebrated. Our mission is to democratize access to great design while empowering creative professionals to build sustainable careers.
+      </p>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials">
+    <div class="container">
+      <h2>What Our Users Say</h2>
+      <p class="section-subtitle">
+        Real feedback from clients and designers who've found success on our platform.
+      </p>
+      <div class="testimonial-grid">
+        <div class="testimonial">
+          <p class="testimonial-text">Within a day I found the perfect interior designer for my home project. The process was so simple and the results exceeded my expectations!</p>
+          <p class="testimonial-author">— Asha R., Hyderabad</p>
+        </div>
+        <div class="testimonial">
+          <p class="testimonial-text">DesignConnect gave me exposure and real client work as a freelancer. The platform is intuitive and the clients are serious about quality design.</p>
+          <p class="testimonial-author">— Vikram K., Fashion Designer</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call-to-Action -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Start Connecting Today</h2>
+        <p class="section-subtitle" style="color: rgba(62, 60, 60, 0.9);">
+          Browse our growing community of designers or register as one. Whether you're a client or creative, DesignConnect is your gateway to collaboration.
+        </p>
+        <div class="hero-cta">
+          <a href="alldesginers.html" class="btn btn-secondary">Browse Designers</a>
+          <a href="login.html" class="btn btn-primary">Join as Designer</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">Design<span>Connect</span></div>
+                <p class="footer-about">Connecting clients with the best design talent worldwide. Simple, clean UI with responsive cards and intuitive booking system.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3 class="footer-heading">Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Interior Design</a></li>
+                    <li><a href="#">Fashion Design</a></li>
+                    <li><a href="#">Graphic Design</a></li>
+                    <li><a href="#">Web Design</a></li>
+                    <li><a href="#">Product Design</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3 class="footer-heading">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Team</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Testimonials</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3 class="footer-heading">Contact</h3>
+                <ul class="contact-info">
+                    <li>
+                        <i class="fas fa-phone-alt contact-icon"></i>
+                        <span>+91 9876543210</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <span>hello@designconnect.com</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-map-marker-alt contact-icon"></i>
+                        <span>123 Design Street, Creative District, Visakhapatnam, India</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 DesignConnect. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

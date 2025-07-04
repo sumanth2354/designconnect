@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DesignConnect | Book Top Designers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #06d6a0;
+            --primary-light: #7af8d8;
+            --primary-dark: #04a37c;
+            --secondary: #7209b7;
+            --accent: #ff006e;
+            --text: #2b2d42;
+            --text-light: #8d99ae;
+            --bg: #ffffff;
+            --card-bg: #f8f9fa;
+            --border: #e9ecef;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --neon-glow: 0 0 10px rgba(6, 214, 160, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text);
+            background-color: var(--bg);
+            line-height: 1.6;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: var(--bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            box-shadow: var(--neon-glow);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: var(--neon-glow);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background-color: #d8005e;
+            box-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+        }
+
+        .search-container {
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            padding: 0.5rem;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-select {
+            padding: 1rem;
+            border: none;
+            border-left: 1px solid var(--border);
+            font-size: 1rem;
+            color: var(--text-light);
+            outline: none;
+        }
+
+        .search-btn {
+            padding: 1rem 2rem;
+            border-radius: 0 50px 50px 0;
+            border: none;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            background-color: var(--primary-dark);
+            box-shadow: var(--neon-glow);
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 5rem 0 2rem;
+            font-size: 2.5rem;
+            color: var(--text);
+        }
+
+        .section-title span {
+            color: var(--primary);
+        }
+
+        .designers {
+            padding: 0 5% 5rem;
+        }
+
+        .designers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .designer-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .designer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .designer-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .designer-info {
+            padding: 1.5rem;
+        }
+
+        .designer-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .designer-specialty {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .designer-company {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .stars {
+            color: #ffc107;
+            margin-right: 0.5rem;
+        }
+
+        .rating-value {
+            font-weight: 600;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .view-more {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        footer {
+            background-color: var(--text);
+            color: white;
+            padding: 5rem 5% 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            color: var(--primary);
+        }
+
+        .footer-about {
+            margin-bottom: 1.5rem;
+            color: #adb5bd;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            color: #adb5bd;
+        }
+
+        .contact-icon {
+            margin-right: 1rem;
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            nav ul {
+                margin: 1rem 0;
+            }
+
+            nav ul li {
+                margin-left: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+                border-radius: 15px;
+            }
+
+            .search-input, .search-select, .search-btn {
+                border-radius: 15px;
+                width: 100%;
+            }
+
+            .search-select {
+                border-left: none;
+                border-top: 1px solid var(--border);
+                border-bottom: 1px solid var(--border);
+            }
+        }
+         #designerList {
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  } 
+
+  .designer-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 280px;
+    flex-shrink: 0;
+  }
+
+  .designer-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .designer-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .designer-info {
+    padding: 1.5rem;
+  }
+
+  .designer-name {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .designer-specialty {
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .designer-company {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .stars {
+    color: #ffc107;
+    margin-right: 0.5rem;
+  }
+
+  .rating-value {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    font-size: 0.9rem;
+  }
+
+  .btn-primary {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--primary-dark);
+    box-shadow: var(--neon-glow);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+  }
+
+  .btn-outline:hover {
+    background-color: var(--primary);
+    color: white;
+    box-shadow: var(--neon-glow);
+  }
+
+  @media screen and (max-width: 600px) {
+    .designer-card {
+      width: 100%;
+    }
+  }
+  nav ul li a.active {
+    color: var(--primary);
+}
+
+nav ul li a.active::after {
+    width: 100%;
+}
+
+/* Alternative approach - if you want to use the .line class for active state */
+nav ul li a.line.active {
+    color: var(--primary);
+}
+
+nav ul li a.line.active::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--primary);
+}
+    </style>
+</head>
+<body>
+   <header>
+    <a href="#" class="logo">Design<span>Connect</span></a>
+    <nav>
+        <ul>
+            <li><a class="line active" href="#">Home</a></li>
+            <li><a href="alldesginers.html">Designers</a></li>
+            <li><a href="aboutpage.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <!-- Inside your navigation bar in index.html -->
+<a href="login.html" class="btn btn-primary" id="loginLink">Login</a>
+
+   <!-- <a href="designert_login.html" class="btn btn-primary">Login</a>-->
+</header>
+    <section class="hero">
+        <h1>Find & Book Top Designers</h1>
+        <p>Connect with the best creative professionals for your home, fashion, graphics, and web design needs</p>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Enter your city...">
+            <select class="search-select">
+                <option>Select Category</option>
+                <option>Interior Design</option>
+                <option>Fashion Design</option>
+                <option>Graphic Design</option>
+                <option>Web Design</option>
+                <option>Product Design</option>
+            </select>
+            <button class="search-btn" onclick="alert('Go to Designers section and search for your designer')">Search</button>
+        </div>
+    </section>
+<!--
+    <section class="designers">
+        <h2 class="section-title">Featured <span>Designers</span></h2>
+        <div class="designers-grid">
+            <div class="designer-card">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Priya Sharma" class="designer-img">
+                <div class="designer-info">
+                    <h3 class="designer-name">Priya Sharma</h3>
+                    <span class="designer-specialty">Interior Designer</span>
+                    <span class="designer-company">Polar Design Studio</span>
+                    <div class="rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-value">4.7/5</span>
+                    </div>
+                    <div class="btn-container">
+                        <a href="#" class="btn btn-outline btn-small">View Portfolio</a>
+                        <a href="#" class="btn btn-primary btn-small">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="designer-card">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Amit Rao" class="designer-img">
+                <div class="designer-info">
+                    <h3 class="designer-name">Amit Rao</h3>
+                    <span class="designer-specialty">Fashion Designer</span>
+                    <span class="designer-company">Monsoon Couture</span>
+                    <div class="rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="rating-value">5.0/5</span>
+                    </div>
+                    <div class="btn-container">
+                        <a href="#" class="btn btn-outline btn-small">View Portfolio</a>
+                        <a href="#" class="btn btn-primary btn-small">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="designer-card">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80" alt="Sneha Kapoor" class="designer-img">
+                <div class="designer-info">
+                    <h3 class="designer-name">Sneha Kapoor</h3>
+                    <span class="designer-specialty">Graphic Designer</span>
+                    <span class="designer-company">Revolution Creative</span>
+                    <div class="rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="rating-value">4.2/5</span>
+                    </div>
+                    <div class="btn-container">
+                        <a href="#" class="btn btn-outline btn-small">View Portfolio</a>
+                        <a href="#" class="btn btn-primary btn-small">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="designer-card">
+                <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Sanjay Verma" class="designer-img">
+                <div class="designer-info">
+                    <h3 class="designer-name">Sanjay Verma</h3>
+                    <span class="designer-specialty">Web Designer</span>
+                    <span class="designer-company">Techies Digital</span>
+                    <div class="rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-value">4.6/5</span>
+                    </div>
+                    <div class="btn-container">
+                        <a href="#" class="btn btn-outline btn-small">View Portfolio</a>
+                        <a href="#" class="btn btn-primary btn-small">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <div id="designerList"></div>
+
+  <script>
+  async function loadDesigners() {
+  const res = await fetch('http://localhost:6969/api/designers');
+  let designers = await res.json();
+
+  // Shuffle array
+  designers = designers.sort(() => 0.5 - Math.random());
+
+  // Pick first 4
+  const selected = designers.slice(0, 4);
+
+  const list = document.getElementById('designerList');
+selected.forEach(d => {
+  const div = document.createElement('div');
+  div.className = "designer-card";
+  div.innerHTML = `
+    <img src="${d.photo}" class="designer-img" alt="${d.name}" />
+    <div class="designer-info">
+      <h3 class="designer-name">${d.name}</h3>
+      <span class="designer-specialty">${d.specialty}</span>
+      <span class="designer-location">${d.location}</span>
+
+
+      <div class="btn-container">
+        <a href="${d.portfolio}" class="btn btn-outline" target="_blank">View Portfolio</a>
+        <button class="btn btn-primary book-btn" data-id="${d._id}" data-name="${d.name}">Book Now</button>
+      </div>
+    </div>
+  `;
+  list.appendChild(div);
+});
+document.querySelectorAll('.book-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = btn.getAttribute('data-id');
+    const name = btn.getAttribute('data-name');
+    openMessageBox(id, name);
+  });
+});
+function openMessageBox(designerId, name) {
+  localStorage.setItem("bookedDesignerId", designerId);
+  localStorage.setItem("bookedDesignerName", name);
+  window.location.href = "message.html";
+}
+
+// Handle "Book Now" button click
+document.addEventListener('click', function (e) {
+  if (e.target.classList.contains('book-btn')) {
+    const designerId = e.target.getAttribute('data-id');
+    const designerName = e.target.getAttribute('data-name');
+
+    // Optional: Store the selected designer in localStorage
+    localStorage.setItem('selectedDesignerId', designerId);
+    localStorage.setItem('selectedDesignerName', designerName);
+
+    // Show messages section
+    showSection('messages', e);
+
+    // Prefill message area (optional)
+    const messageBox = document.getElementById('message-box'); // create this in HTML
+    const messageHeader = document.getElementById('message-header'); // create this in HTML
+    if (messageBox && messageHeader) {
+      messageHeader.textContent = `Message to ${designerName}`;
+      messageBox.value = "";
+    }
+  }
+});
+  }
+
+loadDesigners();
+
+
+
+  // ✅ When page loads
+  window.addEventListener('DOMContentLoaded', () => {
+    const loginLink = document.getElementById("loginLink");
+    const designerId = localStorage.getItem("designerId");
+
+    if (designerId && loginLink) {
+      loginLink.textContent = "Dashboard";
+      loginLink.href = "ddashboard.html"; // Redirect to dashboard page
+    }
+  });
+  async function sendMessage() {
+  const designerId = localStorage.getItem('selectedDesignerId');
+  const message = document.getElementById('message-box').value;
+
+  if (!message.trim()) {
+    alert("Please enter a message.");
+    return;
+  }
+
+  try {
+    const res = await fetch('http://localhost:6969/api/messages', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        toDesigner: designerId,
+        message: message
+      })
+    });
+
+    if (res.ok) {
+      alert("Message sent successfully!");
+      document.getElementById('message-box').value = "";
+    } else {
+      alert("Failed to send message.");
+    }
+  } catch (err) {
+    console.error("Message sending failed:", err);
+    alert("Something went wrong.");
+  }
+}
+
+</script>
+
+
+
+
+
+
+        <div class="view-more">
+            <a href="alldesginers.html" class="btn btn-accent">View All Designers</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">Design<span>Connect</span></div>
+                <p class="footer-about">Connecting clients with the best design talent worldwide. Simple, clean UI with responsive cards and intuitive booking system.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3 class="footer-heading">Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Interior Design</a></li>
+                    <li><a href="#">Fashion Design</a></li>
+                    <li><a href="#">Graphic Design</a></li>
+                    <li><a href="#">Web Design</a></li>
+                    <li><a href="#">Product Design</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3 class="footer-heading">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Team</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Testimonials</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3 class="footer-heading">Contact</h3>
+                <ul class="contact-info">
+                    <li>
+                        <i class="fas fa-phone-alt contact-icon"></i>
+                        <span>+91 9876543210</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <span>hello@designconnect.com</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-map-marker-alt contact-icon"></i>
+                        <span>123 Design Street, Creative District, Visakhapatnam, India</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 DesignConnect. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

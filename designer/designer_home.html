@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>DesignConnect</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+header {
+    position: relative;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 1;
+    background-color: #fff; /* fallback */
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url('backimg.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(9px); /* adjust blur here */
+    z-index: -1;
+    opacity: 0.8; /* optional, for slightly dimmed effect */
+}
+
+nav {
+    flex: 2;
+    color: #ccc;
+    padding-top: 15px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    font-size: 18px;
+  
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none; /* removes underline from links */
+    color: inherit; /* optional: uses default text color */
+}
+
+.login-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+.search-section {
+    width: auto;
+    height: 50vh; 
+    text-align: center;
+    padding: 50px 20px;
+    background-image:url(backimg.png) ;
+}
+
+.search-container {
+    max-width: 420px;
+    margin: 0 auto;
+    background-color: rgba(201, 191, 191, 0.5);  
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 90px;
+}
+.city-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 120px; /* Adjust width as needed */
+}
+.category-select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.search-button {
+    background-color: #93d3e9;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.category-select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.featured-designers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(130, 162, 217);
+     gap: 30px; /* adjust this value to increase/decrease space */
+}
+
+.designer {
+    text-align: center;
+    width: 270px;
+    height: 45vh;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     
+
+}
+
+.designer img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.featured-more{
+    text-align: center;
+    background-color:rgb(130, 162, 217);
+    
+}
+.buttonmore {
+    background-color: #1ad0e8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+
+footer {
+    background-color: #ffffff;
+    padding: 30px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.footer-logo {
+    flex-basis: 30%;
+}
+
+.footer-links {
+    flex-basis: 20%;
+}
+
+.footer-links h3 {
+    border-bottom: 1px solid #007bff;
+    padding-bottom: 5px;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin: 5px 0;
+}
+
+.footer-contact {
+    flex-basis: 20%;
+}
+
+.social-icons {
+    margin-top: 10px;
+}
+
+.social-icons img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h2 style="color: aliceblue;">DesignConnect</h2>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Designers</a></li>
+                <li><a href="#">about</a></li>
+                <li><a href="#">contact</a></li>
+            </ul>
+        </nav>
+        <button class="login-btn">Login</button>
+    </header>
+    
+    <main>
+        <section class="search-section">
+            <p style="font-size: 40px; color: aliceblue; max-width: 1800px;">Find & Book Top Designers</p>
+            <p style="color: aliceblue; font-size: 20px; margin-top: 20px;">Connect with the best designers in your city for<br> home, fashion, and more</p>
+                <div class="search-container">
+                    <input type="text" placeholder="Enter your city" class="city-input">
+                    <select class="category-select">
+                        <option>Select Category</option>
+                        <option>Category 1</option>
+                        <option>Category 2</option>
+                        <option>Category 3</option>
+                    </select>
+                    <button class="search-button">Search</button>
+                </div>
+        </section>
+    </main> 
+     <h1 style="text-align: center;">Featured Designers</h1>
+        <div class="featured-designers">
+           
+            <div class="designer">
+                <img src="priyajpg" >
+                <h3>Priya Sharma</h3>
+                <p>Interior Designer<br>Polar</p>
+                <p>Rating  :4.6/5 star </p>
+                <button>consult</button>
+            </div>
+            <div class="designer">
+                <img src="amitjpg" >
+                <h3>Amit Rao</h3>
+                <p>Fashion Designer<br>Monsoon</p>
+                <p>Rating  :4.6/5 star </p>
+                <button>consult</button>
+            </div>
+            <div class="designer">
+                <img src="snehapg" >
+                <h3>Sneha Kapoor</h3>
+                <p>Graphic Designer<br>Revolution</p>
+                <p>Rating  :4.6/5 star </p>
+                <button>consult</button>
+            </div>
+            <div class="designer">
+                <img src="sanjayjpg" >
+                <h3>Sanjay Verma</h3>
+                <p>Web Designer<br>Techies</p>
+                <p>Rating  :4.6/5 star </p>
+                <button>consult</button>
+            </div>
+             
+        </div>
+        <div class="featured-more">
+                <button class="buttonmore">more</button>
+            </div>
+    
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <h1>DesignConnect</h1>
+                <p>Together we consult best</p>
+                <p>Simple, Clean UI with <br>Responsive Cards </p>
+            </div>
+            <div class="footer-links">
+                <h3>Services</h3>
+                <ul>
+                    <li>Web App Security</li>
+                    <li>Mobile App Security</li>
+                    <li>API Security</li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Company</h3>
+                <ul>
+                    <li>About Us</li>
+                    <li>Services</li>
+                    <li>Contact Us</li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact</h3>
+                <p>📞 +91 9876543210</p>
+                <p>✉️ designConnect@gmail.com</p>
+                 <p>📍 Visakhapatnam</p>
+                <div class="social-icons">
+                    <!-- Icons can be added here -->
+                    <a href="#"><img src="linkedin-icon.png" alt="LinkedIn"></a>
+                    <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
+                    <a href="#"><img src="whatsapp-icon.png" alt="WhatsApp"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© DesignConnect 2025.</p>
+        </div>
+    </footer>
+</body>
+</html>
