@@ -10,29 +10,25 @@ This project includes:
 ---
 
 ## 📂 Project Structure:
-designerconnect/
-│
-├── designer/ # Frontend Pages (HTML, CSS, JS)
-│ ├── index.html
-│ ├── aboutpage.html
-│ ├── alldesginers.html
-│ ├── contact.html
-│ ├── ddashboard.html
-│ └── ... (Other frontend files)
-│
-├── server/ # Backend (Node.js + Express + MongoDB)
-│ ├── mainserver.js # Main backend server
-│ ├── uploads/ # Uploaded portfolio files (images)
-│ └── .env # MongoDB URL and secrets (excluded from Git)
-│
-├── package.json # Node.js project config
-├── package-lock.json
-├── .gitignore
-└── README.md # Project Summary (this file)
 
-yaml
-Copy
-Edit
+
+- `designer/` → Frontend Files (HTML, CSS, JS)
+  - `index.html`
+  - `aboutpage.html`
+  - `alldesginers.html`
+  - `contact.html`
+  - `ddashboard.html`
+  - ... (other frontend files)
+  
+- `server/` → Backend (Node.js + Express + MongoDB)
+  - `mainserver.js` → Main backend server
+  - `uploads/` → Uploaded portfolio images
+  - `.env` → MongoDB URL and secrets (excluded from Git)
+
+- `package.json` → Node.js project configuration  
+- `package-lock.json` → Dependency lock file  
+- `.gitignore` → Files ignored by Git  
+- `README.md` → Project Summary (this file)
 
 ---
 
