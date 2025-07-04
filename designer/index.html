@@ -709,73 +709,62 @@ nav ul li a.line.active::after {
 <script>
 const BASE_URL = window.location.hostname === "localhost"
   ? "http://localhost:6969"
-  : "https://designconnect.onrender.com";  // Replace with your Render backend URL
+  : "https://designconnect.onrender.com";  // ✅ Your backend Render URL
 
+// ✅ Load Designers & Display
 async function loadDesigners() {
-  const res = await fetch(`${BASE_URL}/api/designers`);
-  let designers = await res.json();
+  try {
+    const res = await fetch(`${BASE_URL}/api/designers`);
+    let designers = await res.json();
 
-  // Shuffle array
-  designers = designers.sort(() => 0.5 - Math.random());
+    // Shuffle designers randomly
+    designers = designers.sort(() => 0.5 - Math.random());
 
-  // Pick first 4
-  const selected = designers.slice(0, 4);
+    // Pick first 4 designers
+    const selected = designers.slice(0, 4);
 
-  const list = document.getElementById('designerList');
-  selected.forEach(d => {
-    const div = document.createElement('div');
-    div.className = "designer-card";
-    div.innerHTML = `
-      <img src="${d.photo}" class="designer-img" alt="${d.name}" />
-      <div class="designer-info">
-        <h3 class="designer-name">${d.name}</h3>
-        <span class="designer-specialty">${d.specialty}</span>
-        <span class="designer-location">${d.location}</span>
+    const list = document.getElementById('designerList');
+    list.innerHTML = ''; // Clear old content
 
-        <div class="btn-container">
-          <a href="${d.portfolio}" class="btn btn-outline" target="_blank">View Portfolio</a>
-          <button class="btn btn-primary book-btn" data-id="${d._id}" data-name="${d.name}">Book Now</button>
+    selected.forEach(d => {
+      const div = document.createElement('div');
+      div.className = "designer-card";
+      div.innerHTML = `
+        <img src="${d.photo}" class="designer-img" alt="${d.name}" />
+        <div class="designer-info">
+          <h3 class="designer-name">${d.name}</h3>
+          <span class="designer-specialty">${d.specialty}</span>
+          <span class="designer-location">${d.location}</span>
+          <div class="btn-container">
+            <a href="${d.portfolio}" class="btn btn-outline" target="_blank">View Portfolio</a>
+            <button class="btn btn-primary book-btn" data-id="${d._id}" data-name="${d.name}">Book Now</button>
+          </div>
         </div>
-      </div>
-    `;
-    list.appendChild(div);
-  });
-
-  document.querySelectorAll('.book-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-id');
-      const name = btn.getAttribute('data-name');
-      openMessageBox(id, name);
+      `;
+      list.appendChild(div);
     });
-  });
 
-  function openMessageBox(designerId, name) {
-    localStorage.setItem("bookedDesignerId", designerId);
-    localStorage.setItem("bookedDesignerName", name);
-    window.location.href = "message.html";
+    // Handle Book Now button clicks
+    document.querySelectorAll('.book-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        const name = btn.getAttribute('data-name');
+        openMessageBox(id, name);
+      });
+    });
+
+  } catch (err) {
+    console.error("Failed to load designers:", err);
+    alert("Error loading designers.");
   }
-
-  // Handle "Book Now" button click
-  document.addEventListener('click', function (e) {
-    if (e.target.classList.contains('book-btn')) {
-      const designerId = e.target.getAttribute('data-id');
-      const designerName = e.target.getAttribute('data-name');
-
-      localStorage.setItem('selectedDesignerId', designerId);
-      localStorage.setItem('selectedDesignerName', designerName);
-
-      showSection('messages', e);  // You need to define this function in your script
-      const messageBox = document.getElementById('message-box');
-      const messageHeader = document.getElementById('message-header');
-      if (messageBox && messageHeader) {
-        messageHeader.textContent = `Message to ${designerName}`;
-        messageBox.value = "";
-      }
-    }
-  });
 }
 
-loadDesigners();
+// ✅ Open Message Box
+function openMessageBox(designerId, name) {
+  localStorage.setItem("bookedDesignerId", designerId);
+  localStorage.setItem("bookedDesignerName", name);
+  window.location.href = "message.html";
+}
 
 // ✅ When page loads
 window.addEventListener('DOMContentLoaded', () => {
@@ -786,8 +775,11 @@ window.addEventListener('DOMContentLoaded', () => {
     loginLink.textContent = "Dashboard";
     loginLink.href = "ddashboard.html";
   }
+
+  loadDesigners();  // Load designers when page loads
 });
 
+// ✅ Send Message (You can call this from message page)
 async function sendMessage() {
   const designerId = localStorage.getItem('selectedDesignerId');
   const message = document.getElementById('message-box').value;
