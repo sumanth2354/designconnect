@@ -706,9 +706,13 @@ nav ul li a.line.active::after {
         </div>-->
         <div id="designerList"></div>
 
-  <script>
-  async function loadDesigners() {
-  const res = await fetch('http://localhost:6969/api/designers');
+<script>
+const BASE_URL = window.location.hostname === "localhost"
+  ? "http://localhost:6969"
+  : "https://designconnect-backend.onrender.com";  // Replace with your Render backend URL
+
+async function loadDesigners() {
+  const res = await fetch(`${BASE_URL}/api/designers`);
   let designers = await res.json();
 
   // Shuffle array
@@ -718,77 +722,73 @@ nav ul li a.line.active::after {
   const selected = designers.slice(0, 4);
 
   const list = document.getElementById('designerList');
-selected.forEach(d => {
-  const div = document.createElement('div');
-  div.className = "designer-card";
-  div.innerHTML = `
-    <img src="${d.photo}" class="designer-img" alt="${d.name}" />
-    <div class="designer-info">
-      <h3 class="designer-name">${d.name}</h3>
-      <span class="designer-specialty">${d.specialty}</span>
-      <span class="designer-location">${d.location}</span>
+  selected.forEach(d => {
+    const div = document.createElement('div');
+    div.className = "designer-card";
+    div.innerHTML = `
+      <img src="${d.photo}" class="designer-img" alt="${d.name}" />
+      <div class="designer-info">
+        <h3 class="designer-name">${d.name}</h3>
+        <span class="designer-specialty">${d.specialty}</span>
+        <span class="designer-location">${d.location}</span>
 
-
-      <div class="btn-container">
-        <a href="${d.portfolio}" class="btn btn-outline" target="_blank">View Portfolio</a>
-        <button class="btn btn-primary book-btn" data-id="${d._id}" data-name="${d.name}">Book Now</button>
+        <div class="btn-container">
+          <a href="${d.portfolio}" class="btn btn-outline" target="_blank">View Portfolio</a>
+          <button class="btn btn-primary book-btn" data-id="${d._id}" data-name="${d.name}">Book Now</button>
+        </div>
       </div>
-    </div>
-  `;
-  list.appendChild(div);
-});
-document.querySelectorAll('.book-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const id = btn.getAttribute('data-id');
-    const name = btn.getAttribute('data-name');
-    openMessageBox(id, name);
+    `;
+    list.appendChild(div);
   });
-});
-function openMessageBox(designerId, name) {
-  localStorage.setItem("bookedDesignerId", designerId);
-  localStorage.setItem("bookedDesignerName", name);
-  window.location.href = "message.html";
-}
 
-// Handle "Book Now" button click
-document.addEventListener('click', function (e) {
-  if (e.target.classList.contains('book-btn')) {
-    const designerId = e.target.getAttribute('data-id');
-    const designerName = e.target.getAttribute('data-name');
+  document.querySelectorAll('.book-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      const name = btn.getAttribute('data-name');
+      openMessageBox(id, name);
+    });
+  });
 
-    // Optional: Store the selected designer in localStorage
-    localStorage.setItem('selectedDesignerId', designerId);
-    localStorage.setItem('selectedDesignerName', designerName);
+  function openMessageBox(designerId, name) {
+    localStorage.setItem("bookedDesignerId", designerId);
+    localStorage.setItem("bookedDesignerName", name);
+    window.location.href = "message.html";
+  }
 
-    // Show messages section
-    showSection('messages', e);
+  // Handle "Book Now" button click
+  document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('book-btn')) {
+      const designerId = e.target.getAttribute('data-id');
+      const designerName = e.target.getAttribute('data-name');
 
-    // Prefill message area (optional)
-    const messageBox = document.getElementById('message-box'); // create this in HTML
-    const messageHeader = document.getElementById('message-header'); // create this in HTML
-    if (messageBox && messageHeader) {
-      messageHeader.textContent = `Message to ${designerName}`;
-      messageBox.value = "";
+      localStorage.setItem('selectedDesignerId', designerId);
+      localStorage.setItem('selectedDesignerName', designerName);
+
+      showSection('messages', e);  // You need to define this function in your script
+      const messageBox = document.getElementById('message-box');
+      const messageHeader = document.getElementById('message-header');
+      if (messageBox && messageHeader) {
+        messageHeader.textContent = `Message to ${designerName}`;
+        messageBox.value = "";
+      }
     }
-  }
-});
-  }
+  });
+}
 
 loadDesigners();
 
+// ✅ When page loads
+window.addEventListener('DOMContentLoaded', () => {
+  const loginLink = document.getElementById("loginLink");
+  const designerId = localStorage.getItem("designerId");
 
+  if (designerId && loginLink) {
+    loginLink.textContent = "Dashboard";
+    loginLink.href = "ddashboard.html";
+  }
+});
 
-  // ✅ When page loads
-  window.addEventListener('DOMContentLoaded', () => {
-    const loginLink = document.getElementById("loginLink");
-    const designerId = localStorage.getItem("designerId");
-
-    if (designerId && loginLink) {
-      loginLink.textContent = "Dashboard";
-      loginLink.href = "ddashboard.html"; // Redirect to dashboard page
-    }
-  });
-  async function sendMessage() {
+async function sendMessage() {
   const designerId = localStorage.getItem('selectedDesignerId');
   const message = document.getElementById('message-box').value;
 
@@ -798,11 +798,11 @@ loadDesigners();
   }
 
   try {
-    const res = await fetch('http://localhost:6969/api/messages', {
+    const res = await fetch(`${BASE_URL}/api/messages`, {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        toDesigner: designerId,
+        designerId: designerId,
         message: message
       })
     });
@@ -818,8 +818,8 @@ loadDesigners();
     alert("Something went wrong.");
   }
 }
-
 </script>
+
 
 
 
