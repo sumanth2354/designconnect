@@ -709,7 +709,7 @@ nav ul li a.line.active::after {
 <script>
 const BASE_URL = window.location.hostname === "localhost"
   ? "http://localhost:6969"
-  : "https://designconnect-backend.onrender.com";  // Replace with your Render backend URL
+  : "https://designconnect.onrender.com";  // Replace with your Render backend URL
 
 async function loadDesigners() {
   const res = await fetch(`${BASE_URL}/api/designers`);
