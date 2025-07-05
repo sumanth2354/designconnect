@@ -397,6 +397,10 @@ document.getElementById("designerForm").addEventListener("submit", async functio
   </div>
 
   <script>
+    const BASE_URL = window.location.hostname === "localhost"
+      ? "http://localhost:6969"
+      : "https://designconnect.onrender.com";  // ✅ Your backend Render URL
+  
     function togglePassword() {
       const passwordField = document.getElementById('password');
       const toggleIcon = document.getElementById('toggleIcon');
@@ -408,25 +412,28 @@ document.getElementById("designerForm").addEventListener("submit", async functio
         toggleIcon.textContent = '👁️';
       }
     }
-
+  
     document.getElementById("designerForm").addEventListener("submit", async function (e) {
       e.preventDefault();
       const email = document.querySelector('input[name="email"]').value;
+  
       try {
-        // Step 1: Check if email already exists
-        const checkRes = await fetch(`http://localhost:6969/api/check-email?email=${encodeURIComponent(email)}`);
+        // ✅ Step 1: Check if email already exists
+        const checkRes = await fetch(`${BASE_URL}/api/check-email?email=${encodeURIComponent(email)}`);
         const checkData = await checkRes.json();
-
+  
         if (checkData.exists) {
           alert("⚠️ Email already exists. Please use a different one.");
           return;
         }
-        // Step 2: Submit form
+  
+        // ✅ Step 2: Submit form with file (photo)
         const form = new FormData(this);
-        const res = await fetch("http://localhost:6969/api/designers", {
+        const res = await fetch(`${BASE_URL}/api/designers`, {
           method: "POST",
           body: form
         });
+  
         const result = await res.json();
         if (res.ok) {
           alert("✅ Registered successfully!");
@@ -434,12 +441,13 @@ document.getElementById("designerForm").addEventListener("submit", async functio
         } else {
           alert(result.message || "❌ Registration failed");
         }
-
+  
       } catch (err) {
         console.error("❌ Fetch error:", err);
-        alert("Something went wrong. Please try again. but go back to login page and login");
+        alert("Something went wrong. Please try again, or go back to login page and login.");
       }
     });
   </script>
+  
 </body>
 </html>
