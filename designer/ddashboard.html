@@ -638,185 +638,187 @@
     </div>
   </div>
 
-<script>
-  const designerId = localStorage.getItem("designerId");
-  if (!designerId) {
-    window.location.href = "login.html";
-  }
-
-  async function loadDesignerProfile() {
-    try {
-      const res = await fetch(`http://localhost:6969/api/designers/${designerId}`);
-      const designer = await res.json();
-      document.getElementById("profile-photo").src = designer.photo || "default-image.jpg";
-      document.getElementById("name").textContent = designer.name || "Designer Name";
-      document.getElementById("specialty-title").textContent = designer.specialty || "Your Specialty";
-      document.getElementById("designer-location").textContent = designer.location || "Unknown Location";
-     document.getElementById("settings-username").value = designer.name || "";
-document.getElementById("settings-email").value = designer.email || "";
-
-      document.getElementById("edit-full-name").value = designer.name || "";
-      document.getElementById("edit-email").value = designer.email || "";
-      document.getElementById("edit-phone").value = designer.phone || "";
-      document.getElementById("edit-specialty").value = designer.specialty || "";
-      document.getElementById("edit-experience").value = designer.experience || "";
-      document.getElementById("edit-portfolio").value = designer.portfolio || "";
-      document.getElementById("edit-linkedin").value = designer.linkedin || "";
-      document.getElementById("edit-company").value = designer.company || "";
-      document.getElementById("edit-position").value = designer.position || "";
-      document.getElementById("edit-location").value = designer.location || "";
-
-      document.getElementById("full-name").textContent = designer.name || "";
-      document.getElementById("email").textContent = designer.email || "";
-      document.getElementById("phone").textContent = designer.phone || "";
-      document.getElementById("specialty").textContent = designer.specialty || "";
-      document.getElementById("experience").textContent = designer.experience || "";
-      document.getElementById("portfolio").textContent = designer.portfolio || "";
-      document.getElementById("linkedin").textContent = designer.linkedin || "";
-      document.getElementById("company").textContent = designer.company || "";
-      document.getElementById("position").textContent = designer.position || "";
-      document.getElementById("location").textContent = designer.location || "";
-    } catch (err) {
-      console.error("Failed to load designer:", err);
-    }
-  }
-
-  document.getElementById("save-edit-btn").addEventListener("click", async () => {
-    const updatedData = {
-      name: document.getElementById("edit-full-name").value,
-      email: document.getElementById("edit-email").value,
-      phone: document.getElementById("edit-phone").value,
-      specialty: document.getElementById("edit-specialty").value,
-      experience: document.getElementById("edit-experience").value,
-      portfolio: document.getElementById("edit-portfolio").value,
-      linkedin: document.getElementById("edit-linkedin").value,
-      company: document.getElementById("edit-company").value,
-      position: document.getElementById("edit-position").value,
-      location: document.getElementById("edit-location").value
-    };
-
-    try {
-      const res = await fetch(`http://localhost:6969/api/designers/${designerId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(updatedData)
-      });
-
-      if (res.ok) {
-        alert("Profile updated successfully!");
-        loadDesignerProfile();
-        showSection('profile', { currentTarget: document.querySelector(".nav-btn[onclick*='profile']") });
-      } else {
-        const error = await res.json();
-        alert("Update failed: " + error.message);
-      }
-    } catch (err) {
-      console.error("Update failed:", err);
-      alert("Something went wrong while updating.");
-    }
-  });
-
-  document.addEventListener("DOMContentLoaded", loadDesignerProfile);
-
-  function showSection(sectionId, event) {
-    document.querySelectorAll('.section').forEach(section => {
-      section.classList.remove('active');
-    });
-    document.getElementById(sectionId).classList.add('active');
-
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.classList.remove('active');
-    });
-    if (event) {
-      event.currentTarget.classList.add('active');
-    }
-  }
-
-  function logout() {
-    localStorage.removeItem("designerId");
-    window.location.href = "login.html";
-  }
-
-  async function updatePassword() {
-    const currentPassword = prompt("Enter your current password:");
-    const newPassword = document.getElementById("password").value;
-
-    if (!newPassword || !currentPassword) {
-      return alert("Please enter both current and new password.");
-    }
-
-    try {
-      const res = await fetch(`http://localhost:6969/api/designers/${designerId}/password`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ currentPassword, newPassword })
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        alert("Password updated successfully.");
-        document.getElementById("password").value = "";
-      } else {
-        alert("Failed to update password: " + data.message);
-      }
-    } catch (err) {
-      console.error("Password update error:", err);
-      alert("Something went wrong.");
-    }
-  }
-
-  function formatTime(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleString("en-IN", {
-      dateStyle: "medium",
-      timeStyle: "short",
-    });
-  }
-
-  async function loadMessages() {
+  <script>
+    const BASE_URL = window.location.hostname === "localhost"
+      ? "http://localhost:6969"
+      : "https://designconnect.onrender.com";  // ✅ Your backend Render URL
+  
     const designerId = localStorage.getItem("designerId");
-    if (!designerId) return;
-
-    try {
-      const res = await fetch(`http://localhost:6969/api/messages/${designerId}`);
-      const messages = await res.json();
-
-      const container = document.querySelector('.messages-container');
-      container.innerHTML = "";
-
-      if (messages.length === 0) {
-        container.innerHTML = `
-          <div class="empty-state">
-            <i class="far fa-comment-dots"></i>
-            <p>No messages yet</p>
-            <p>When clients contact you, your messages will appear here</p>
-          </div>`;
-        return;
-      }
-
-      messages.forEach(msg => {
-        const div = document.createElement('div');
-        div.className = 'message-card';
-        div.innerHTML = `
-          <p><strong>From:</strong> ${msg.from}</p>
-          <p><strong>Message:</strong> ${msg.message}</p>
-          <p><small>📅 Sent on: ${formatTime(msg.timestamp)}</small></p>
-          <hr>`;
-        container.appendChild(div);
-      });
-    } catch (err) {
-      console.error("Error loading messages:", err);
+    if (!designerId) {
+      window.location.href = "login.html";
     }
-  }
-
-  document.addEventListener("DOMContentLoaded", loadMessages);
-</script>
-
+  
+    async function loadDesignerProfile() {
+      try {
+        const res = await fetch(`${BASE_URL}/api/designers/${designerId}`);
+        const designer = await res.json();
+        document.getElementById("profile-photo").src = designer.photo || "default-image.jpg";
+        document.getElementById("name").textContent = designer.name || "Designer Name";
+        document.getElementById("specialty-title").textContent = designer.specialty || "Your Specialty";
+        document.getElementById("designer-location").textContent = designer.location || "Unknown Location";
+  
+        document.getElementById("settings-username").value = designer.name || "";
+        document.getElementById("settings-email").value = designer.email || "";
+        document.getElementById("edit-full-name").value = designer.name || "";
+        document.getElementById("edit-email").value = designer.email || "";
+        document.getElementById("edit-phone").value = designer.phone || "";
+        document.getElementById("edit-specialty").value = designer.specialty || "";
+        document.getElementById("edit-experience").value = designer.experience || "";
+        document.getElementById("edit-portfolio").value = designer.portfolio || "";
+        document.getElementById("edit-linkedin").value = designer.linkedin || "";
+        document.getElementById("edit-company").value = designer.company || "";
+        document.getElementById("edit-position").value = designer.position || "";
+        document.getElementById("edit-location").value = designer.location || "";
+  
+        document.getElementById("full-name").textContent = designer.name || "";
+        document.getElementById("email").textContent = designer.email || "";
+        document.getElementById("phone").textContent = designer.phone || "";
+        document.getElementById("specialty").textContent = designer.specialty || "";
+        document.getElementById("experience").textContent = designer.experience || "";
+        document.getElementById("portfolio").textContent = designer.portfolio || "";
+        document.getElementById("linkedin").textContent = designer.linkedin || "";
+        document.getElementById("company").textContent = designer.company || "";
+        document.getElementById("position").textContent = designer.position || "";
+        document.getElementById("location").textContent = designer.location || "";
+      } catch (err) {
+        console.error("Failed to load designer:", err);
+      }
+    }
+  
+    document.getElementById("save-edit-btn").addEventListener("click", async () => {
+      const updatedData = {
+        name: document.getElementById("edit-full-name").value,
+        email: document.getElementById("edit-email").value,
+        phone: document.getElementById("edit-phone").value,
+        specialty: document.getElementById("edit-specialty").value,
+        experience: document.getElementById("edit-experience").value,
+        portfolio: document.getElementById("edit-portfolio").value,
+        linkedin: document.getElementById("edit-linkedin").value,
+        company: document.getElementById("edit-company").value,
+        position: document.getElementById("edit-position").value,
+        location: document.getElementById("edit-location").value
+      };
+  
+      try {
+        const res = await fetch(`${BASE_URL}/api/designers/${designerId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(updatedData)
+        });
+  
+        if (res.ok) {
+          alert("Profile updated successfully!");
+          loadDesignerProfile();
+          showSection('profile', { currentTarget: document.querySelector(".nav-btn[onclick*='profile']") });
+        } else {
+          const error = await res.json();
+          alert("Update failed: " + error.message);
+        }
+      } catch (err) {
+        console.error("Update failed:", err);
+        alert("Something went wrong while updating.");
+      }
+    });
+  
+    document.addEventListener("DOMContentLoaded", () => {
+      loadDesignerProfile();
+      loadMessages();
+    });
+  
+    function showSection(sectionId, event) {
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(sectionId).classList.add('active');
+  
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      if (event) {
+        event.currentTarget.classList.add('active');
+      }
+    }
+  
+    function logout() {
+      localStorage.removeItem("designerId");
+      window.location.href = "login.html";
+    }
+  
+    async function updatePassword() {
+      const currentPassword = prompt("Enter your current password:");
+      const newPassword = document.getElementById("password").value;
+  
+      if (!newPassword || !currentPassword) {
+        return alert("Please enter both current and new password.");
+      }
+  
+      try {
+        const res = await fetch(`${BASE_URL}/api/designers/${designerId}/password`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ currentPassword, newPassword })
+        });
+  
+        const data = await res.json();
+  
+        if (res.ok) {
+          alert("Password updated successfully.");
+          document.getElementById("password").value = "";
+        } else {
+          alert("Failed to update password: " + data.message);
+        }
+      } catch (err) {
+        console.error("Password update error:", err);
+        alert("Something went wrong.");
+      }
+    }
+  
+    function formatTime(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleString("en-IN", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    }
+  
+    async function loadMessages() {
+      try {
+        const res = await fetch(`${BASE_URL}/api/messages/${designerId}`);
+        const messages = await res.json();
+  
+        const container = document.querySelector('.messages-container');
+        container.innerHTML = "";
+  
+        if (messages.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <i class="far fa-comment-dots"></i>
+              <p>No messages yet</p>
+              <p>When clients contact you, your messages will appear here</p>
+            </div>`;
+          return;
+        }
+  
+        messages.forEach(msg => {
+          const div = document.createElement('div');
+          div.className = 'message-card';
+          div.innerHTML = `
+            <p><strong>From:</strong> ${msg.from}</p>
+            <p><strong>Message:</strong> ${msg.message}</p>
+            <p><small>📅 Sent on: ${formatTime(msg.timestamp)}</small></p>
+            <hr>`;
+          container.appendChild(div);
+        });
+      } catch (err) {
+        console.error("Error loading messages:", err);
+      }
+    }
+  </script>
+  
 
 </body>
 </html>
