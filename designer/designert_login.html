@@ -164,13 +164,27 @@
       background: var(--primary-dark);
     }
 
+    /* Enhanced Responsive Design */
     @media(max-width: 768px) {
       .container {
         flex-direction: column;
+        margin: 1rem;
+        border-radius: 15px;
+      }
+
+      .left {
+        padding: 2rem 1.5rem;
+        min-width: auto;
+      }
+
+      .right {
+        padding: 2rem 1.5rem;
+        min-width: auto;
       }
 
       form {
         grid-template-columns: 1fr;
+        gap: 15px;
       }
 
       .full-width,
@@ -178,6 +192,92 @@
         grid-column: 1 / 2;
         justify-self: center;
         width: 100%;
+      }
+
+      .gender-checkbox {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .gender-checkbox label {
+        justify-content: center;
+      }
+    }
+
+    @media(max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        margin: 0;
+        border-radius: 10px;
+      }
+
+      .left h2 {
+        font-size: 24px;
+      }
+
+      .left p {
+        font-size: 13px;
+      }
+
+      .right h3 {
+        font-size: 20px;
+      }
+
+      form input,
+      form select {
+        padding: 10px;
+        font-size: 14px;
+      }
+
+      .file-upload input[type="file"] {
+        padding: 8px;
+        font-size: 13px;
+      }
+
+      .register-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+
+      .toggle-buttons button {
+        padding: 4px 12px;
+        font-size: 13px;
+      }
+    }
+
+    @media(max-width: 320px) {
+      .left {
+        padding: 1.5rem 1rem;
+      }
+
+      .right {
+        padding: 1.5rem 1rem;
+      }
+
+      .left h2 {
+        font-size: 22px;
+      }
+
+      .right h3 {
+        font-size: 18px;
+      }
+
+      form {
+        gap: 12px;
+      }
+
+      form input,
+      form select {
+        padding: 8px;
+        font-size: 13px;
+      }
+
+      .register-btn {
+        padding: 8px 16px;
+        font-size: 13px;
       }
     }
 

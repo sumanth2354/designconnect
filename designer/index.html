@@ -405,14 +405,17 @@
             font-size: 0.9rem;
         }
 
+        /* Enhanced Responsive Design */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
                 padding: 1rem;
+                gap: 1rem;
             }
 
             nav ul {
                 margin: 1rem 0;
+                gap: 1rem;
             }
 
             nav ul li {
@@ -423,9 +426,14 @@
                 font-size: 2.5rem;
             }
 
+            .hero p {
+                font-size: 1rem;
+            }
+
             .search-container {
                 flex-direction: column;
                 border-radius: 15px;
+                gap: 0.5rem;
             }
 
             .search-input, .search-select, .search-btn {
@@ -437,6 +445,97 @@
                 border-left: none;
                 border-top: 1px solid var(--border);
                 border-bottom: 1px solid var(--border);
+            }
+
+            #designerList {
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .designer-card {
+                width: 100%;
+                max-width: 350px;
+            }
+
+            .btn-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero {
+                padding: 3rem 1rem;
+            }
+
+            .designer-card {
+                margin: 0 auto;
+            }
+
+            .designer-name {
+                font-size: 1.1rem;
+            }
+
+            .designer-specialty {
+                font-size: 0.9rem;
+            }
+
+            .designer-company {
+                font-size: 0.8rem;
+            }
+
+            .btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .search-container {
+                padding: 0.3rem;
+            }
+
+            .search-input, 
+            .search-select, 
+            .search-btn {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .designer-card {
+                border-radius: 10px;
+            }
+
+            .btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
             }
         }
          #designerList {

@@ -638,6 +638,184 @@
     </div>
   </div>
 
+  <style>
+    /* Responsive Design for Dashboard */
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 1rem;
+      }
+
+      .sidebar-header {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .nav-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .nav-btn {
+        flex: 1;
+        min-width: 120px;
+        padding: 0.8rem 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 1rem;
+      }
+
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      .profile-photo {
+        width: 120px;
+        height: 120px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .edit-form {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .save-btn {
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sidebar {
+        padding: 0.8rem;
+      }
+
+      .sidebar-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .nav-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .nav-btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+
+      .main-content {
+        padding: 0.8rem;
+      }
+
+      .profile-photo {
+        width: 100px;
+        height: 100px;
+      }
+
+      .profile-info h2 {
+        font-size: 1.5rem;
+      }
+
+      .profile-info p {
+        font-size: 0.9rem;
+      }
+
+      .section h2 {
+        font-size: 1.3rem;
+      }
+
+      .form-group label {
+        font-size: 0.9rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+      }
+
+      .save-btn {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+      }
+
+      .message-card {
+        padding: 0.8rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .message-card p {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .sidebar {
+        padding: 0.5rem;
+      }
+
+      .main-content {
+        padding: 0.5rem;
+      }
+
+      .profile-photo {
+        width: 80px;
+        height: 80px;
+      }
+
+      .profile-info h2 {
+        font-size: 1.3rem;
+      }
+
+      .nav-btn {
+        padding: 0.6rem 0.4rem;
+        font-size: 0.8rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      .save-btn {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+
   <script>
     const BASE_URL = window.location.hostname === "localhost"
       ? "http://localhost:6969"
