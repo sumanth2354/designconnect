@@ -511,12 +511,17 @@ nav ul li a.line.active::after {
 
   <!-- JavaScript Section -->
   <script>
+    const BASE_URL = window.location.hostname === "localhost"
+      ? "http://localhost:6969"
+      : "https://designconnect.onrender.com";  // ✅ Your backend Render URL
+    
+    // ✅ Load Designers & Display
     async function loadDesigners() {
-      const res = await fetch('http://localhost:6969/api/designers');
+      const res = await fetch(`${BASE_URL}/api/designers`);
       const designers = await res.json();
       const list = document.getElementById('designerList');
       list.innerHTML = "";
-
+    
       designers.forEach(d => {
         const div = document.createElement('div');
         div.className = "designer-card";
@@ -533,8 +538,11 @@ nav ul li a.line.active::after {
           </div>`;
         list.appendChild(div);
       });
-
-      // Attach event to book buttons
+    
+      attachBookButtonEvents();
+    }
+    
+    function attachBookButtonEvents() {
       document.querySelectorAll('.book-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const id = btn.getAttribute('data-id');
@@ -545,10 +553,10 @@ nav ul li a.line.active::after {
         });
       });
     }
-
+    
     document.addEventListener("DOMContentLoaded", loadDesigners);
-
-    // Login state switch to Dashboard
+    
+    // ✅ Login State Switch to Dashboard
     window.addEventListener("DOMContentLoaded", () => {
       const loginLink = document.getElementById("loginLink");
       const designerId = localStorage.getItem("designerId");
@@ -557,25 +565,26 @@ nav ul li a.line.active::after {
         loginLink.href = "ddashboard.html";
       }
     });
-
-    // Search functionality
+    
+    // ✅ Search functionality
     document.querySelector(".search-btn").addEventListener("click", async () => {
       const city = document.querySelector(".search-input").value.trim().toLowerCase();
       const category = document.querySelector(".search-select").value.trim().toLowerCase();
-      const res = await fetch("http://localhost:6969/api/designers");
+    
+      const res = await fetch(`${BASE_URL}/api/designers`);
       const designers = await res.json();
-
+    
       const filtered = designers.filter(d => {
         const matchCity = city === "" || (d.location && d.location.toLowerCase().includes(city));
         const matchCategory = category === "select category" || (d.specialty && d.specialty.toLowerCase() === category);
         return matchCity && matchCategory;
       });
-
+    
       const list = document.getElementById("designerList");
-      list.innerHTML = filtered.length === 0 
+      list.innerHTML = filtered.length === 0
         ? "<p>No designers found for your criteria.</p>"
         : "";
-
+    
       filtered.forEach(d => {
         const div = document.createElement("div");
         div.className = "designer-card";
@@ -592,18 +601,10 @@ nav ul li a.line.active::after {
           </div>`;
         list.appendChild(div);
       });
-
-      // Rebind event listeners for filtered results
-      document.querySelectorAll('.book-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.getAttribute('data-id');
-          const name = btn.getAttribute('data-name');
-          localStorage.setItem("bookedDesignerId", id);
-          localStorage.setItem("bookedDesignerName", name);
-          window.location.href = "message.html";
-        });
-      });
+    
+      attachBookButtonEvents();  // Rebind book buttons after filtering
     });
-  </script>
+    </script>
+    
 </body>
 </html>
