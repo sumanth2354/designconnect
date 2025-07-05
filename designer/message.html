@@ -84,22 +84,26 @@
   </div>
 
   <script>
+    const BASE_URL = window.location.hostname === "localhost"
+      ? "http://localhost:6969"
+      : "https://designconnect.onrender.com";  // ✅ Your backend Render URL
+  
     // Load selected designer info
     const designerId = localStorage.getItem("bookedDesignerId");
     const designerName = localStorage.getItem("bookedDesignerName");
     document.getElementById("designerName").textContent = designerName || "Designer";
-
+  
     async function sendClientMessage() {
       const message = document.getElementById("clientMessage").value.trim();
       const name = document.getElementById("clientName").value.trim() || "Anonymous";
-
+  
       if (!message) {
         alert("Please enter a message.");
         return;
       }
-
+  
       try {
-        const res = await fetch("http://localhost:6969/api/messages", {
+        const res = await fetch(`${BASE_URL}/api/messages`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -108,10 +112,10 @@
             from: name
           })
         });
-
+  
         if (res.ok) {
-          alert("Message sent successfully! They will contact you soon.");
-          window.location.href = "index.html"; // Or redirect back to homepage
+          alert("✅ Message sent successfully! They will contact you soon.");
+          window.location.href = "index.html";  // Redirect back to homepage
         } else {
           const data = await res.json();
           alert("Failed to send message: " + (data.message || "Unknown error"));
@@ -122,6 +126,7 @@
       }
     }
   </script>
+  
 
 </body>
 </html>
