@@ -415,26 +415,34 @@ document.getElementById("designerForm").addEventListener("submit", async functio
   
     document.getElementById("designerForm").addEventListener("submit", async function (e) {
       e.preventDefault();
-      const email = document.querySelector('input[name="email"]').value;
-  
+      
       try {
+        const email = document.querySelector('input[name="email"]').value;
+        const form = new FormData(this);
+        
         // ✅ Step 1: Check if email already exists
-        const checkRes = await fetch(`${BASE_URL}/api/check-email?email=${encodeURIComponent(email)}`);
-        const checkData = await checkRes.json();
-  
-        if (checkData.exists) {
-          alert("⚠️ Email already exists. Please use a different one.");
-          return;
+        try {
+          const checkRes = await fetch(`${BASE_URL}/api/check-email?email=${encodeURIComponent(email)}`);
+          if (checkRes.ok) {
+            const checkData = await checkRes.json();
+            if (checkData.exists) {
+              alert("⚠️ Email already exists. Please use a different one.");
+              return;
+            }
+          }
+        } catch (checkErr) {
+          console.log("Email check failed, continuing with registration...");
         }
   
         // ✅ Step 2: Submit form with file (photo)
-        const form = new FormData(this);
         const res = await fetch(`${BASE_URL}/api/designers`, {
           method: "POST",
           body: form
         });
   
         const result = await res.json();
+        console.log("Registration response:", result);
+        
         if (res.ok) {
           alert("✅ Registered successfully!");
           window.location.href = "ddashboard.html";
@@ -444,7 +452,7 @@ document.getElementById("designerForm").addEventListener("submit", async functio
   
       } catch (err) {
         console.error("❌ Fetch error:", err);
-        alert("Something went wrong. Please try again, or go back to login page and login.");
+        alert("Something went wrong. Please try again.");
       }
     });
   </script>

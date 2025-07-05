@@ -208,6 +208,17 @@ app.post('/api/messages', async (req, res) => {
   }
 });
 
+// ✅ Check if email exists
+app.get('/api/check-email', async (req, res) => {
+  try {
+    const { email } = req.query;
+    const designer = await Designer.findOne({ email });
+    res.json({ exists: !!designer });
+  } catch (err) {
+    res.status(500).json({ message: "Error checking email" });
+  }
+});
+
 // ✅ Fix existing designer photo URLs
 app.post('/api/fix-photos', async (req, res) => {
   try {
