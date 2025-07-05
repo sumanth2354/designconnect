@@ -122,9 +122,12 @@ app.get('/api/designers', async (req, res) => {
     
     const updatedDesigners = designers.map(designer => {
       const designerObj = designer.toObject();
-      // If the photo URL doesn't start with http, fix it
-      if (designerObj.photo && !designerObj.photo.startsWith('http')) {
-        designerObj.photo = `${baseUrl}/uploads/${designerObj.photo.split('/').pop()}`;
+      // Fix URLs that point to localhost or don't have the correct base URL
+      if (designerObj.photo) {
+        if (designerObj.photo.includes('localhost:6969') || !designerObj.photo.startsWith('https://designconnect.onrender.com')) {
+          const filename = designerObj.photo.split('/').pop();
+          designerObj.photo = `${baseUrl}/uploads/${filename}`;
+        }
       }
       return designerObj;
     });
@@ -216,7 +219,7 @@ app.post('/api/fix-photos', async (req, res) => {
     let updatedCount = 0;
     
     for (const designer of designers) {
-      if (designer.photo && !designer.photo.startsWith('http')) {
+      if (designer.photo && (designer.photo.includes('localhost:6969') || !designer.photo.startsWith('https://designconnect.onrender.com'))) {
         const filename = designer.photo.split('/').pop();
         designer.photo = `${baseUrl}/uploads/${filename}`;
         await designer.save();
