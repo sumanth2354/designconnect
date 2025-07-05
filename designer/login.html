@@ -269,30 +269,39 @@
   </div>
 
   <script>
-    // Form submission for login
+    const BASE_URL = window.location.hostname === "localhost"
+      ? "http://localhost:6969"
+      : "https://designconnect.onrender.com";  // ✅ Your backend Render URL
+  
+    // ✅ Login Form Submission
     document.getElementById("loginForm").addEventListener("submit", async function (e) {
       e.preventDefault();
       const form = new FormData(this);
       const data = Object.fromEntries(form.entries());
-
-      const res = await fetch("http://localhost:6969/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-
-      const result = await res.json();
-
-      if (res.ok) {
-        alert("Login successful!");
-        localStorage.setItem("designerId", result.designerId);
-        window.location.href = "ddashboard.html"; // ✅ FIXED redirect
-      } else {
-        alert("Login failed");
+  
+      try {
+        const res = await fetch(`${BASE_URL}/api/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+  
+        const result = await res.json();
+  
+        if (res.ok) {
+          alert("✅ Login successful!");
+          localStorage.setItem("designerId", result.designerId);
+          window.location.href = "ddashboard.html";  // Redirect to dashboard
+        } else {
+          alert(result.message || "❌ Login failed");
+        }
+  
+      } catch (err) {
+        console.error("❌ Login error:", err);
+        alert("Something went wrong during login.");
       }
     });
-
-   
   </script>
+  
 </body>
 </html>
