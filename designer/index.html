@@ -730,7 +730,7 @@ async function loadDesigners() {
       const div = document.createElement('div');
       div.className = "designer-card";
       div.innerHTML = `
-        <img src="${d.photo}" class="designer-img" alt="${d.name}" />
+        <img src="${d.photo}" class="designer-img" alt="${d.name}" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=688&q=80'" />
         <div class="designer-info">
           <h3 class="designer-name">${d.name}</h3>
           <span class="designer-specialty">${d.specialty}</span>

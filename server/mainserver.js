@@ -71,7 +71,11 @@ app.post('/api/designers', upload.single('photo'), async (req, res) => {
     if (!Array.isArray(gender)) gender = [gender];
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const photoUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    // Use the correct base URL for Render deployment
+    const baseUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://designconnect.onrender.com' 
+      : `${req.protocol}://${req.get('host')}`;
+    const photoUrl = `${baseUrl}/uploads/${req.file.filename}`;
 
     const newDesigner = new Designer({
       name, email, password: hashedPassword, specialty, company, location,
@@ -110,7 +114,22 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/designers', async (req, res) => {
   try {
     const designers = await Designer.find();
-    res.json(designers);
+    
+    // Fix photo URLs for existing designers if they have incorrect URLs
+    const baseUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://designconnect.onrender.com' 
+      : 'http://localhost:6969';
+    
+    const updatedDesigners = designers.map(designer => {
+      const designerObj = designer.toObject();
+      // If the photo URL doesn't start with http, fix it
+      if (designerObj.photo && !designerObj.photo.startsWith('http')) {
+        designerObj.photo = `${baseUrl}/uploads/${designerObj.photo.split('/').pop()}`;
+      }
+      return designerObj;
+    });
+    
+    res.json(updatedDesigners);
   } catch (err) {
     res.status(500).json({ message: "Error fetching designers" });
   }
@@ -183,6 +202,32 @@ app.post('/api/messages', async (req, res) => {
     res.status(201).json({ message: "Message sent" });
   } catch (err) {
     res.status(500).json({ message: "Failed to send message" });
+  }
+});
+
+// ✅ Fix existing designer photo URLs
+app.post('/api/fix-photos', async (req, res) => {
+  try {
+    const baseUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://designconnect.onrender.com' 
+      : 'http://localhost:6969';
+    
+    const designers = await Designer.find();
+    let updatedCount = 0;
+    
+    for (const designer of designers) {
+      if (designer.photo && !designer.photo.startsWith('http')) {
+        const filename = designer.photo.split('/').pop();
+        designer.photo = `${baseUrl}/uploads/${filename}`;
+        await designer.save();
+        updatedCount++;
+      }
+    }
+    
+    res.json({ message: `Fixed ${updatedCount} designer photo URLs` });
+  } catch (err) {
+    console.error("Error fixing photos:", err);
+    res.status(500).json({ message: "Failed to fix photo URLs" });
   }
 });
 
